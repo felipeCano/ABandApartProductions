@@ -1,0 +1,18 @@
+ext {
+    dependencies {
+        implementation annexe.kotlin.stdlib
+        implementation annexe.support.appCompat
+        implementation annexe.support.androidxCore
+        implementation annexe.support.constraint
+        implementation annexe.desing.material
+        implementation annexe.data.gsonCore
+        implementation annexe.retrofit.core
+        implementation annexe.retrofit.adapterRxJava2
+        implementation annexe.retrofit.converterGson
+        implementation annexe.okHttp3.core
+        implementation annexe.navigation.core
+        implementation annexe.navigation.fragment
+        implementation annexe.images.picasso
+        implementation 'com.google.android.instantapps:instantapps:1.1.0'
+    }
+}

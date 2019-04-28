@@ -1,0 +1,36 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs"
+apply from: '../config_module.gradle'
+apply from: '../base_libraries.gradle'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId versions.applicationId
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdkVersion
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        versionCode versions.versionCode
+        versionName versions.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+    dynamicFeatures = []
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.airbnb.android:lottie:2.8.0'
+
+    testImplementation annexe.test.junit
+    androidTestImplementation annexe.test.androidxTestRunner
+    androidTestImplementation annexe.test.androidxTestEspresso
+}
