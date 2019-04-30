@@ -33,4 +33,8 @@ dependencies {
     testImplementation annexe.test.junit
     androidTestImplementation annexe.test.androidxTestRunner
     androidTestImplementation annexe.test.androidxTestEspresso
+
+    implementation annexe.database.roomRuntime
+    kapt annexe.database.roomCompiler
+    implementation annexe.database.roomRxjava2
 }

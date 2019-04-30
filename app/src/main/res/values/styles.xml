@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#00d59e</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="android:background">@color/colorbackground</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="tabSelectedTextColor">#00d59e</item>
+    </style>
 </resources>

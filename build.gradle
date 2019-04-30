@@ -18,13 +18,14 @@ buildscript {
             'testRunner'        : '1.1.0-alpha4',
             'espressoCore'      : '3.1.0-alpha4',
             'supportMultidex'   : '1.0.3',
-            'archLifecycle'     : '2.0.0',
             'gsonCore'          : '2.8.5',
             'retrofitNet'       : '2.4.0',
             'okHttpNet'         : '3.13.1',
             'xNavigation'       : '2.0.0-rc02',
             'googleMaterial'    : '1.0.0-alpha1',
-            'imgPicasso'        : '2.71828'
+            'imgPicasso'        : '2.71828',
+            'archLifecycle'     : '2.0.0',
+            'room'              : '2.0.0'
     ]
 
     ext.annexe = [
@@ -67,6 +68,16 @@ buildscript {
             ],
             images    : [
                     'picasso': "com.squareup.picasso:picasso:${versions.imgPicasso}"
+            ],
+            lifecycle : [
+                    'extensions'  : "android.arch.lifecycle:extensions:${versions.archLifecycle}",
+                    'compiler'    : "androidx.lifecycle:lifecycle-compiler:${versions.archLifecycle}",
+                    'reactStreams': "androidx.lifecycle:lifecycle-reactivestreams:${versions.archLifecycle}"
+            ],
+            database  : [
+                    'roomRuntime' : "androidx.room:room-runtime:${versions.room}",
+                    'roomCompiler': "androidx.room:room-compiler:${versions.room}",
+                    'roomRxjava2' : "androidx.room:room-rxjava2:${versions.room}",
             ]
     ]
 

@@ -14,5 +14,7 @@ ext {
         implementation annexe.navigation.fragment
         implementation annexe.images.picasso
         implementation 'com.google.android.instantapps:instantapps:1.1.0'
+        implementation annexe.lifecycle.extensions
+        implementation annexe.lifecycle.reactStreams
     }
 }
