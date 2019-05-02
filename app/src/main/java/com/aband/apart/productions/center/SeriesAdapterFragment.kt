@@ -4,13 +4,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.aband.apart.productions.ui.fragments.SeriesFragment
-private const val ARG_OBJECT = "object"
-class SeriesAdapterFragment(fm : FragmentManager) : FragmentStatePagerAdapter(fm) {
 
-    lateinit var  mCategories: Array<String>
-    override fun getCount(): Int = 3
+const val FAVORITE_TV_SHOW = "Favorite tv Show"
+const val RECCOMENDATIONS_TV_SHOW = "Recommendations"
+const val RATED_TV_SHOW = "Rated Tv Show"
+class SeriesAdapterFragment(fm : FragmentManager/*, private val series : ArrayList<SerieLocal>*/) :
+    FragmentStatePagerAdapter(fm) {
+
+    override fun getCount(): Int = 3 /*series.size * MAX_VALUE*/
 
     override fun getItem(position: Int): Fragment {
+    /*return SeriesFragment().newInstance(series[position % series.size])*/
         return when(position){
             0 -> SeriesFragment()
             1 -> SeriesFragment()
@@ -19,10 +23,16 @@ class SeriesAdapterFragment(fm : FragmentManager) : FragmentStatePagerAdapter(fm
                 return SeriesFragment()
         }
     }
+
     override fun getPageTitle(position: Int): CharSequence {
-       // return mCategories[position]
-        return ARG_OBJECT + (position + 1)
+        /*return series[position % series.size].title*/
+        return when (position) {
+            0 -> return FAVORITE_TV_SHOW
+            1 -> return RECCOMENDATIONS_TV_SHOW
+            2 -> return RATED_TV_SHOW
+            else ->
+                return FAVORITE_TV_SHOW
+
+        }
     }
-
-
 }
