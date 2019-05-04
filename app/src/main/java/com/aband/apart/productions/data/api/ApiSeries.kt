@@ -12,12 +12,11 @@ const val ACCEPT_TOKEN: String = "Accept: application/json"
 const val CONTENT_TYPE: String = "Content-Type: application/json"
 interface ApiSeries {
 
-    //TODO: Put strins in constants
     @Headers(ACCEPT_TOKEN, CONTENT_TYPE)
     @GET("popular")
-    fun getPopularMovies(
+    fun getPopularSeries(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US",
-        @Query("page") page: String = "1"
+        @Query("page") page: Int = 1
     ): Observable<JsonElement>
 }

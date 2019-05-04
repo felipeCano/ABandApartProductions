@@ -1,52 +1,54 @@
 package com.aband.apart.productions.ui.fragments
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import android.util.Log
 import com.aband.apart.productions.center.BaseFragment
-import com.aband.apart.productions.center.utils.InjectorUtils
-import kotlinx.android.synthetic.main.fragment_series.*
 import com.aband.apart.productions.R
-import com.aband.apart.productions.control.model.remote.SerieRemote
+import com.aband.apart.productions.control.repository.SeriesRepository
+import com.aband.apart.productions.data.api.ApiSeries
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class SeriesFragment : BaseFragment() {
 
-    /*fun newInstance(serieRemote: SerieRemote): SeriesFragment {
-        val args = Bundle()
-        args.putString(SeriesHelper.KEY_TITLE, serieRemote.status.toString())
-
-        // Create a new MovieFragment and set the Bundle as the arguments
-        // to be retrieved and displayed when the view is created
-        val fragment = SeriesFragment()
-        fragment.arguments = args
-        return fragment
-    }*/
+    lateinit var seriesViewModel: SeriesViewModel
+    lateinit var seriesRepository: SeriesRepository
 
     override fun onFinishedViewLoad() {
         initializeUi()
     }
 
     private fun initializeUi() {
-        val factory = InjectorUtils.provideSeriesViewModelFactory()
-        val viewModel = ViewModelProviders.of(this, factory)
-            .get(SeriesViewModel::class.java)
+
+        val builder =
+            GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setLenient().create()
+
+        var okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        var retrofit = Retrofit.Builder()
+            .baseUrl("https://api.themoviedb.org/3/tv/")
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(builder))
+            .build()
+            .create(ApiSeries::class.java)
+
+        seriesRepository = SeriesRepository(retrofit)
+        seriesViewModel = SeriesViewModel(seriesRepository)
 
 
-        /*viewModel.getSeries().observe(this, Observer { quotes ->
-            val stringBuilder = StringBuilder()
-            quotes.forEach { quote ->
-                stringBuilder.append("$quote\n\n")
-            }
-            textView_quotes.text = stringBuilder.toString()
-            //title
-        })*/
+        seriesViewModel.getSeries()
 
-        button_add_quote.setOnClickListener {
-            val quote = SerieRemote(editText_quote.text.toString())
-          //  viewModel.addQuote(quote)
-            editText_quote.setText("")
-        }
+        Log.d("holi", seriesViewModel.getSeries().toString())
     }
-
 
 
     override fun fragmentLayout(): Int = R.layout.fragment_series

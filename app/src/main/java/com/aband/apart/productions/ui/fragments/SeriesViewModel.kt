@@ -10,7 +10,7 @@ class SeriesViewModel(private val seriesRepository: SeriesRepository) : BaseView
     fun addSeries(seriesRemote: List<SeriesRepository>){
         seriesRepository.librarySeries(seriesRemote)
     }
-    fun addQuote(serieRemote: SerieLocal) = seriesRepository.searchMovie(serieRemote.id)
+    //fun addQuote(serieRemote: SerieLocal) = seriesRepository.searchMovie(serieRemote.id)
 
-    //fun getSeries() = seriesRepository.getSeries()
+    fun getSeries() = seriesRepository.getSeries()
 }

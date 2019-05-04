@@ -1,9 +1,8 @@
 package com.aband.apart.productions.control.model.remote
 
+import com.aband.apart.productions.control.model.local.SerieLocal
+
 data class SerieRemote(
-    var status: String
-){
-    override fun toString(): String {
-        return "$status"
-    }
-}
+    var page: Int,
+    var results: List<SerieLocal> = emptyList()
+)
