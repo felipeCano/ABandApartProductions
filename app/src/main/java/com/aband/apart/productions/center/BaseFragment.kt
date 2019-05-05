@@ -1,6 +1,5 @@
 package com.aband.apart.productions.center
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
 abstract class BaseFragment : Fragment() {
-    lateinit var process: ProgressDialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

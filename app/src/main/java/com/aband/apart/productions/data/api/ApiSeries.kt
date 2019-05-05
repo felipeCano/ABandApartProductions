@@ -14,9 +14,10 @@ interface ApiSeries {
 
     @Headers(ACCEPT_TOKEN, CONTENT_TYPE)
     @GET("popular")
+    //@GET("550")
     fun getPopularSeries(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1
+        @Query("page") page: String = "1"
     ): Observable<JsonElement>
 }

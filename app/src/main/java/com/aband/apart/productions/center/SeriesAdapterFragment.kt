@@ -14,7 +14,6 @@ class SeriesAdapterFragment(fm : FragmentManager/*, private val series : ArrayLi
     override fun getCount(): Int = 3 /*series.size * MAX_VALUE*/
 
     override fun getItem(position: Int): Fragment {
-    /*return SeriesFragment().newInstance(series[position % series.size])*/
         return when(position){
             0 -> SeriesFragment()
             1 -> SeriesFragment()
@@ -25,7 +24,6 @@ class SeriesAdapterFragment(fm : FragmentManager/*, private val series : ArrayLi
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        /*return series[position % series.size].title*/
         return when (position) {
             0 -> return FAVORITE_TV_SHOW
             1 -> return RECCOMENDATIONS_TV_SHOW

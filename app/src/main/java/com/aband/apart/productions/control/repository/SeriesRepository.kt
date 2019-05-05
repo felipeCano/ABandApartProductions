@@ -1,5 +1,6 @@
 package com.aband.apart.productions.control.repository
 
+import android.util.Log
 import com.aband.apart.productions.control.model.local.SerieLocal
 import com.aband.apart.productions.control.model.remote.SerieRemote
 import com.aband.apart.productions.data.api.ApiSeries
@@ -10,18 +11,17 @@ class SeriesRepository (private val apiSeries: ApiSeries) {
 
     fun librarySeries(seriesRepository: List<SeriesRepository>) {}
 
-   fun getSeries() : Observable<List<SerieLocal>>{
+   fun getSeries() : Observable<List<SerieLocal>> {
        return apiSeries.getPopularSeries().map { response ->
-        Gson().fromJson(response, SerieRemote::class.java).results
-       }
-   }
-    companion object {
-        // Singleton instantiation you already know and love
-        @Volatile private var instance: SeriesRepository? = null
+           Log.d("pruebaResponse", response.toString())
+           Gson().fromJson(response, SerieRemote::class.java).results
 
-        fun getInstance(apiSeries: ApiSeries) =
-            instance ?: synchronized(this) {
-                instance ?: SeriesRepository(apiSeries).also { instance = it }
-            }
-    }
+       }.doOnNext {
+           Log.e("abuelita1", it.toString())
+       }
+           .doOnError {
+               Log.e("abuelita", it.toString())
+           }
+   }
+
 }
