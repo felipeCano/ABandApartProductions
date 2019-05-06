@@ -1,13 +1,15 @@
 package com.aband.apart.productions.ui.fragments
 
+import android.util.Log
+import androidx.lifecycle.Observer
 import com.aband.apart.productions.center.BaseFragment
 import com.aband.apart.productions.R
+import com.aband.apart.productions.control.model.local.SerieLocal
 import com.aband.apart.productions.control.repository.SeriesRepository
 import com.aband.apart.productions.data.api.ApiSeries
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -21,6 +23,7 @@ class SeriesFragment : BaseFragment() {
     lateinit var okHttpClient : OkHttpClient
     lateinit var retrofit : ApiSeries
     lateinit var builder : Gson
+
 
     override fun onFinishedViewLoad() {
         builder = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setLenient().create()
@@ -46,10 +49,10 @@ class SeriesFragment : BaseFragment() {
         seriesViewModel = SeriesViewModel(seriesRepository)
 
         seriesViewModel.getSeries()
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe()
-
+        var recyclerObserver = Observer<List<SerieLocal>>{
+            Log.d("este", it.toString())
+        }
+        seriesViewModel.liveData.observe(this, recyclerObserver)
     }
 
     override fun fragmentLayout(): Int = R.layout.fragment_series

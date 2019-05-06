@@ -9,6 +9,8 @@ ext {
         implementation annexe.retrofit.core
         implementation annexe.retrofit.adapterRxJava2
         implementation annexe.retrofit.converterGson
+        implementation annexe.rx.rxjava
+        implementation annexe.rx.rxandroid
         implementation annexe.okHttp3.core
         implementation annexe.navigation.core
         implementation annexe.navigation.fragment

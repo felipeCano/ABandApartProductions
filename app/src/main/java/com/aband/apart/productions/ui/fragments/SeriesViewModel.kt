@@ -11,5 +11,8 @@ class SeriesViewModel(private val seriesRepository: SeriesRepository) : BaseView
         seriesRepository.librarySeries(seriesRemote)
     }
 
-    fun getSeries() = seriesRepository.getSeries()
+    //fun getSeries() = seriesRepository.getSeries()
+    fun getSeries() {
+        addDisposable(seriesRepository.getSeries())
+    }
 }
