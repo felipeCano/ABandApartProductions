@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
     fun initFragment (){
        // val series = SeriesHelper.getSeriesFromJson("series.json", this)
         mSeriesAdapterFragment = SeriesAdapterFragment(supportFragmentManager)
-        pager.adapter = mSeriesAdapterFragment
-        tabLayout.setupWithViewPager(pager)
+       /* pager.adapter = mSeriesAdapterFragment
+        tabLayout.setupWithViewPager(pager)*/
         //pager.currentItem = mSeriesAdapterFragment.count /2
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.JsonElement
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -35,5 +36,13 @@ interface ApiSeries {
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US",
         @Query("page") page: String = "1"
+    ): Observable<JsonElement>
+
+    @Headers(ACCEPT_TOKEN, CONTENT_TYPE)
+    @GET("{tv_id}")
+    fun getDetailSerie(
+        @Path("tv_id") serieId: String,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en-US"
     ): Observable<JsonElement>
 }

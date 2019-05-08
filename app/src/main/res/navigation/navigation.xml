@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/navigation" />
+            android:id="@+id/navigation"
+    app:startDestination="@id/seriesFragment">
+    <fragment
+        android:id="@+id/seriesFragment"
+        android:name="com.aband.apart.productions.ui.series.SeriesFragment"
+        android:label="SeriesFragment" >
+        <action
+            android:id="@+id/action_seriesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.aband.apart.productions.ui.detail.DetailFragment"
+        android:label="DetailFragment" />
+</navigation>

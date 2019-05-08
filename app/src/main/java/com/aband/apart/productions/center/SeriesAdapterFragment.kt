@@ -3,7 +3,7 @@ package com.aband.apart.productions.center
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.aband.apart.productions.ui.fragments.SeriesFragment
+import com.aband.apart.productions.ui.series.SeriesFragment
 
 const val FAVORITE_TV_SHOW = "Popular"
 const val RECCOMENDATIONS_TV_SHOW = "On Tv"

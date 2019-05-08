@@ -1,8 +1,8 @@
-package com.aband.apart.productions.ui.fragments
+package com.aband.apart.productions.ui.series
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.aband.apart.productions.center.BaseFragment
 import com.aband.apart.productions.R
 import com.aband.apart.productions.control.model.local.SerieLocal
@@ -11,6 +11,7 @@ import com.aband.apart.productions.data.api.ApiSeries
 import com.aband.apart.productions.ui.adapter.SeriesOnTvAdapter
 import com.aband.apart.productions.ui.adapter.SeriesPopularAdapter
 import com.aband.apart.productions.ui.adapter.SeriesTopRatedAdapter
+import com.aband.apart.productions.ui.interfaces.DetailSeriesInterface
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -21,7 +22,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class SeriesFragment : BaseFragment() {
+class SeriesFragment : BaseFragment() , DetailSeriesInterface {
 
     lateinit var seriesViewModel: SeriesViewModel
     lateinit var seriesRepository: SeriesRepository
@@ -72,6 +73,7 @@ class SeriesFragment : BaseFragment() {
 
     fun initAdapterPopular(serieLocal: List<SerieLocal>){
         mAdapter = SeriesPopularAdapter(serieLocal)
+        mAdapter!!.onDetailsSeries(this)
         rvSeriesPopular.adapter = mAdapter
     }
 
@@ -92,5 +94,11 @@ class SeriesFragment : BaseFragment() {
         initAdapterOnTv(seriesLocal)
     }
 
+    override fun onDetailSeries(serieLocal: SerieLocal) {
+        var bundle = Bundle()
+        bundle.putString("serieId", serieLocal.id)
+        Log.d("idprueba", serieLocal.id)
+        navController()!!.navigate(R.id.action_seriesFragment_to_detailFragment, bundle)
+    }
     override fun fragmentLayout(): Int = R.layout.fragment_series
 }

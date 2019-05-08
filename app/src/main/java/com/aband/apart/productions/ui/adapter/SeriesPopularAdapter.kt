@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aband.apart.productions.R
 import com.aband.apart.productions.control.model.local.SerieLocal
+import com.aband.apart.productions.ui.interfaces.DetailSeriesInterface
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_popular_series.view.*
 
@@ -13,10 +14,24 @@ const val PATH = "https://image.tmdb.org/t/p/w500"
 class SeriesPopularAdapter(var myDataset : List<SerieLocal>) :
 RecyclerView.Adapter<SeriesPopularAdapter.SerieHolder>(){
 
-    class SerieHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val mtvTitleSeries = itemView.tvTitleSeries
-        val mtvOverride = itemView.tvOverride
+     var detailSeries : DetailSeriesInterface? = null
+
+    inner class SerieHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
+
+        //    val mtvTitleSeries = itemView.tvTitleSeries
+        //val mtvOverride = itemView.tvOverride
         val mImageSeries = itemView.imageSeries
+
+        init {
+            mImageSeries.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            val i = v!!.id
+            if (i == R.id.imageSeries){
+                detailSeries!!.onDetailSeries(myDataset[position])
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SerieHolder {
@@ -26,15 +41,19 @@ RecyclerView.Adapter<SeriesPopularAdapter.SerieHolder>(){
     }
 
     override fun onBindViewHolder(holder: SerieHolder, position: Int) {
-        holder.mtvTitleSeries.text = myDataset[position].originalName
-        holder.mtvOverride.text = myDataset[position].overview
+      //  holder.mtvTitleSeries.text = myDataset[position].originalName
+        //holder.mtvOverride.text = myDataset[position].overview
         Picasso.get()
             .load(PATH + myDataset[position].imageserie)
-            .resize(300, 300)
+            .resize(600, 950)
             .placeholder(R.drawable.got)
             .centerCrop()
             .into(holder.mImageSeries)
     }
 
     override fun getItemCount(): Int = myDataset.size
+
+    fun onDetailsSeries(detailSeriesInterface: DetailSeriesInterface){
+        this.detailSeries = detailSeriesInterface
+    }
 }

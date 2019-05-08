@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "serie")
 data class SerieLocal(
     @PrimaryKey
-    val id: Int,
+    val id: String,
     @SerializedName("original_name")
     val originalName: String,
     @SerializedName("poster_path")

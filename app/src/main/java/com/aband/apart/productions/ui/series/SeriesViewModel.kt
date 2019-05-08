@@ -1,4 +1,4 @@
-package com.aband.apart.productions.ui.fragments
+package com.aband.apart.productions.ui.series
 
 import com.aband.apart.productions.center.BaseViewModel
 import com.aband.apart.productions.control.repository.SeriesRepository

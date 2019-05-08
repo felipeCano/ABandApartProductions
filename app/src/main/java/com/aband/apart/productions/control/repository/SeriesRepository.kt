@@ -7,33 +7,44 @@ import com.aband.apart.productions.data.api.ApiSeries
 import com.google.gson.Gson
 import io.reactivex.Observable
 
-class SeriesRepository (private val apiSeries: ApiSeries) {
+class SeriesRepository(private val apiSeries: ApiSeries) {
 
-   fun getSeries() : Observable<List<SerieLocal>> {
-       return apiSeries.getPopularSeries().map { response ->
-           Log.d("getPopular", response.toString())
-           Gson().fromJson(response, SerieRemote::class.java).results
+    fun getSeries(): Observable<List<SerieLocal>> {
+        return apiSeries.getPopularSeries().map { response ->
+            Log.d("getPopular", response.toString())
+            Gson().fromJson(response, SerieRemote::class.java).results
 
-       }.doOnNext {
-           Log.e("getPopular", it.toString())
-       }
-           .doOnError {
-               Log.e("getPopular", it.toString())
-           }
-   }
+        }.doOnNext {
+            Log.e("getPopular", it.toString())
+        }
+            .doOnError {
+                Log.e("getPopular", it.toString())
+            }
+    }
 
-    fun getSeriesTodRated() : Observable<List<SerieLocal>>{
-        return apiSeries.getTopRatedSeries().map { response->
+    fun getSeriesTodRated(): Observable<List<SerieLocal>> {
+        return apiSeries.getTopRatedSeries().map { response ->
             Log.d("getTopRated", response.toString())
             Gson().fromJson(response, SerieRemote::class.java).results
         }
     }
 
-    fun getSeriesOnTv() : Observable<List<SerieLocal>>{
-        return apiSeries.getOnTvSeries().map { response->
+    fun getSeriesOnTv(): Observable<List<SerieLocal>> {
+        return apiSeries.getOnTvSeries().map { response ->
             Log.d("getOntv", response.toString())
             Gson().fromJson(response, SerieRemote::class.java).results
         }
+    }
+
+    fun getDetailSeries(serieId: String): Observable<SerieLocal> {
+        return apiSeries.getDetailSerie(serieId).map { response ->
+            Gson().fromJson(response, SerieLocal::class.java)
+        }.doOnNext {
+            Log.e("getDetailSeries", it.toString())
+        }
+            .doOnError {
+                Log.e("getDetailSeries1", it.toString())
+            }
     }
 
 }
