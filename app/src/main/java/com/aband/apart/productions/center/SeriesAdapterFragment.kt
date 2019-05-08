@@ -5,13 +5,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.aband.apart.productions.ui.fragments.SeriesFragment
 
-const val FAVORITE_TV_SHOW = "Favorite tv Show"
-const val RECCOMENDATIONS_TV_SHOW = "Recommendations"
-const val RATED_TV_SHOW = "Rated Tv Show"
-class SeriesAdapterFragment(fm : FragmentManager/*, private val series : ArrayList<SerieLocal>*/) :
+const val FAVORITE_TV_SHOW = "Popular"
+const val RECCOMENDATIONS_TV_SHOW = "On Tv"
+const val RATED_TV_SHOW = "Top Rated"
+class SeriesAdapterFragment(fm : FragmentManager) :
     FragmentStatePagerAdapter(fm) {
 
-    override fun getCount(): Int = 3 /*series.size * MAX_VALUE*/
+    override fun getCount(): Int = 3
 
     override fun getItem(position: Int): Fragment {
         return when(position){

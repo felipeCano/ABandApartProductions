@@ -5,11 +5,15 @@ import com.aband.apart.productions.control.repository.SeriesRepository
 
 class SeriesViewModel(private val seriesRepository: SeriesRepository) : BaseViewModel() {
 
-    fun addSeries(seriesRemote: List<SeriesRepository>){
-        seriesRepository.librarySeries(seriesRemote)
+    fun getSeriesPopular() {
+        addDisposable(seriesRepository.getSeries())
     }
 
-    fun getSeries() {
-        addDisposable(seriesRepository.getSeries())
+    fun getSeriesTopRated(){
+        addDisposable(seriesRepository.getSeriesTodRated())
+    }
+
+    fun getSeriesOnTv(){
+        addDisposable(seriesRepository.getSeriesOnTv())
     }
 }

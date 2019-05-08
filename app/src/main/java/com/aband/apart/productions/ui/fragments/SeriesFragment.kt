@@ -8,7 +8,9 @@ import com.aband.apart.productions.R
 import com.aband.apart.productions.control.model.local.SerieLocal
 import com.aband.apart.productions.control.repository.SeriesRepository
 import com.aband.apart.productions.data.api.ApiSeries
+import com.aband.apart.productions.ui.adapter.SeriesOnTvAdapter
 import com.aband.apart.productions.ui.adapter.SeriesPopularAdapter
+import com.aband.apart.productions.ui.adapter.SeriesTopRatedAdapter
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -27,7 +29,8 @@ class SeriesFragment : BaseFragment() {
     lateinit var retrofit: ApiSeries
     lateinit var builder: Gson
     var mAdapter: SeriesPopularAdapter? = null
-    var mSerieLocal: SerieLocal? = null
+    var mAdapterTopRated : SeriesTopRatedAdapter? = null
+    var mAdaterOnTv : SeriesOnTvAdapter? = null
 
     override fun onFinishedViewLoad() {
         builder =
@@ -52,35 +55,41 @@ class SeriesFragment : BaseFragment() {
     private fun initializeUi() {
         seriesRepository = SeriesRepository(retrofit)
         seriesViewModel = SeriesViewModel(seriesRepository)
-        seriesViewModel.getSeries()
+        seriesViewModel.getSeriesPopular()
+        seriesViewModel.getSeriesTopRated()
+        seriesViewModel.getSeriesOnTv()
 
-        seriesViewModel.liveData.observe(this, recyclerObserver)
-
+        seriesViewModel.liveData.observe(this, recyclerPopular)
+        seriesViewModel.liveData.observe(this, recyclerTopRated)
+        seriesViewModel.liveData.observe(this, recyclerOnTv)
 
     }
 
-    fun iniAdapter(serieLocal: List<SerieLocal>){
+    fun initAdapterTopRated(serieLocal: List<SerieLocal>){
+        mAdapterTopRated = SeriesTopRatedAdapter(serieLocal)
+        rvSeriesTopRated.adapter = mAdapterTopRated
+    }
+
+    fun initAdapterPopular(serieLocal: List<SerieLocal>){
         mAdapter = SeriesPopularAdapter(serieLocal)
         rvSeriesPopular.adapter = mAdapter
     }
 
-    var recyclerObserver = Observer<List<SerieLocal>> { seriesLocal ->
+    fun initAdapterOnTv(serieLocal: List<SerieLocal>){
+        mAdaterOnTv = SeriesOnTvAdapter(serieLocal)
+        rvSeriesOnTv.adapter = mAdaterOnTv
+    }
 
-        iniAdapter(seriesLocal)
+    var recyclerPopular = Observer<List<SerieLocal>> { seriesLocal ->
+        initAdapterPopular(seriesLocal)
+    }
 
-       // rvSeriesPopular.layoutManager = LinearLayoutManager(activity)
-        /*mAdapter = SeriesPopularAdapter(seriesLocal)
-        mAdapter!!.loadSerie(seriesLocal)
-        rvSeriesPopular.adapter = mAdapter*/
-       // rvSeriesPopular.apply {
-          //  adapter = SeriesPopularAdapter(seriesLocal)
-        //}
+    var recyclerTopRated =  Observer<List<SerieLocal>> { seriesLocal ->
+        initAdapterTopRated(seriesLocal)
+    }
 
-        //mAdapter = SeriesPopularAdapter(it)
-        // rvSeriesPopular.adapter = mAdapter
-        //mAdapter.loadSerie(it)
-
-        Log.d("este", seriesLocal.toString())
+    var recyclerOnTv = Observer<List<SerieLocal>> { seriesLocal ->
+        initAdapterOnTv(seriesLocal)
     }
 
     override fun fragmentLayout(): Int = R.layout.fragment_series

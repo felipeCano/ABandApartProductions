@@ -9,19 +9,31 @@ import io.reactivex.Observable
 
 class SeriesRepository (private val apiSeries: ApiSeries) {
 
-    fun librarySeries(seriesRepository: List<SeriesRepository>) {}
-
    fun getSeries() : Observable<List<SerieLocal>> {
        return apiSeries.getPopularSeries().map { response ->
-           Log.d("pruebaResponse", response.toString())
+           Log.d("getPopular", response.toString())
            Gson().fromJson(response, SerieRemote::class.java).results
 
        }.doOnNext {
-           Log.e("abuelita1", it.toString())
+           Log.e("getPopular", it.toString())
        }
            .doOnError {
-               Log.e("abuelita", it.toString())
+               Log.e("getPopular", it.toString())
            }
    }
+
+    fun getSeriesTodRated() : Observable<List<SerieLocal>>{
+        return apiSeries.getTopRatedSeries().map { response->
+            Log.d("getTopRated", response.toString())
+            Gson().fromJson(response, SerieRemote::class.java).results
+        }
+    }
+
+    fun getSeriesOnTv() : Observable<List<SerieLocal>>{
+        return apiSeries.getOnTvSeries().map { response->
+            Log.d("getOntv", response.toString())
+            Gson().fromJson(response, SerieRemote::class.java).results
+        }
+    }
 
 }
