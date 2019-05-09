@@ -61,7 +61,7 @@ class DetailFragment : BaseFragment() {
         overrideDetail.text = serieLocal.overview
         Picasso.get()
             .load(PATH_DETAIL_SERIE + serieLocal.imageserie)
-            .resize(300, 300)
+            .resize(600, 800)
             .centerCrop()
             .into(imageDetailSerie)
     }
