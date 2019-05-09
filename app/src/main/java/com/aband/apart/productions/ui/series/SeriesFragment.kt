@@ -3,11 +3,14 @@ package com.aband.apart.productions.ui.series
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
+import androidx.room.Room
 import com.aband.apart.productions.center.BaseFragment
 import com.aband.apart.productions.R
 import com.aband.apart.productions.control.model.local.SerieLocal
 import com.aband.apart.productions.control.repository.SeriesRepository
 import com.aband.apart.productions.data.api.ApiSeries
+import com.aband.apart.productions.data.db.SerieDataBase
+import com.aband.apart.productions.data.db.SeriesDao
 import com.aband.apart.productions.ui.adapter.SeriesOnTvAdapter
 import com.aband.apart.productions.ui.adapter.SeriesPopularAdapter
 import com.aband.apart.productions.ui.adapter.SeriesTopRatedAdapter
@@ -22,7 +25,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class SeriesFragment : BaseFragment() , DetailSeriesInterface {
+const val DATABASE_NAME ="ABandApartProductions_series.db"
+class SeriesFragment : BaseFragment(), DetailSeriesInterface {
 
     lateinit var seriesViewModel: SeriesViewModel
     lateinit var seriesRepository: SeriesRepository
@@ -30,8 +34,10 @@ class SeriesFragment : BaseFragment() , DetailSeriesInterface {
     lateinit var retrofit: ApiSeries
     lateinit var builder: Gson
     var mAdapter: SeriesPopularAdapter? = null
-    var mAdapterTopRated : SeriesTopRatedAdapter? = null
-    var mAdaterOnTv : SeriesOnTvAdapter? = null
+    var mAdapterTopRated: SeriesTopRatedAdapter? = null
+    var mAdaterOnTv: SeriesOnTvAdapter? = null
+    lateinit var seriesDao : SeriesDao
+    lateinit var serieDataBase : SerieDataBase
 
     override fun onFinishedViewLoad() {
         builder =
@@ -50,15 +56,23 @@ class SeriesFragment : BaseFragment() , DetailSeriesInterface {
             .build()
             .create(ApiSeries::class.java)
 
+         serieDataBase =  Room.databaseBuilder(context!!, SerieDataBase::class.java,DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+
+
+
         initializeUi()
     }
 
     private fun initializeUi() {
-        seriesRepository = SeriesRepository(retrofit)
+        seriesDao =serieDao(serieDataBase)
+        seriesRepository = SeriesRepository(retrofit, seriesDao)
         seriesViewModel = SeriesViewModel(seriesRepository)
         seriesViewModel.getSeriesPopular()
         seriesViewModel.getSeriesTopRated()
         seriesViewModel.getSeriesOnTv()
+        seriesViewModel.getSeriesBd()
 
         seriesViewModel.liveData.observe(this, recyclerPopular)
         seriesViewModel.liveData.observe(this, recyclerTopRated)
@@ -66,18 +80,18 @@ class SeriesFragment : BaseFragment() , DetailSeriesInterface {
 
     }
 
-    fun initAdapterTopRated(serieLocal: List<SerieLocal>){
+    fun initAdapterTopRated(serieLocal: List<SerieLocal>) {
         mAdapterTopRated = SeriesTopRatedAdapter(serieLocal)
         rvSeriesTopRated.adapter = mAdapterTopRated
     }
 
-    fun initAdapterPopular(serieLocal: List<SerieLocal>){
+    fun initAdapterPopular(serieLocal: List<SerieLocal>) {
         mAdapter = SeriesPopularAdapter(serieLocal)
         mAdapter!!.onDetailsSeries(this)
         rvSeriesPopular.adapter = mAdapter
     }
 
-    fun initAdapterOnTv(serieLocal: List<SerieLocal>){
+    fun initAdapterOnTv(serieLocal: List<SerieLocal>) {
         mAdaterOnTv = SeriesOnTvAdapter(serieLocal)
         rvSeriesOnTv.adapter = mAdaterOnTv
     }
@@ -86,7 +100,7 @@ class SeriesFragment : BaseFragment() , DetailSeriesInterface {
         initAdapterPopular(seriesLocal)
     }
 
-    var recyclerTopRated =  Observer<List<SerieLocal>> { seriesLocal ->
+    var recyclerTopRated = Observer<List<SerieLocal>> { seriesLocal ->
         initAdapterTopRated(seriesLocal)
     }
 
@@ -100,5 +114,8 @@ class SeriesFragment : BaseFragment() , DetailSeriesInterface {
         Log.d("idprueba", serieLocal.id)
         navController()!!.navigate(R.id.action_seriesFragment_to_detailFragment, bundle)
     }
+
     override fun fragmentLayout(): Int = R.layout.fragment_series
+
+    fun serieDao(db: SerieDataBase): SeriesDao = db.movieDao()
 }

@@ -3,8 +3,8 @@ package com.aband.apart.productions.data
 import com.aband.apart.productions.data.db.SeriesDao
 
 class DataBase private constructor(){
-    var serieDao = SeriesDao()
-    private set
+   // var serieDao = SeriesDao()
+   // private set
     companion object{
         @Volatile private var instance: DataBase? = null
 

@@ -16,4 +16,8 @@ class SeriesViewModel(private val seriesRepository: SeriesRepository) : BaseView
     fun getSeriesOnTv(){
         addDisposable(seriesRepository.getSeriesOnTv())
     }
+
+    fun getSeriesBd(){
+        addDisposable(seriesRepository.popularSeries())
+    }
 }

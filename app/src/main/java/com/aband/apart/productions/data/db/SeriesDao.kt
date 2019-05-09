@@ -1,31 +1,25 @@
 package com.aband.apart.productions.data.db
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.aband.apart.productions.control.model.local.SerieLocal
-import com.aband.apart.productions.control.model.remote.SerieRemote
 import io.reactivex.Single
 
-//@Dao
-class
-SeriesDao {
-    private val seriesDao = mutableListOf<SerieRemote>()
-    private val series = MutableLiveData<List<SerieRemote>>()
 
-   /* @Query("SELECT * FROM serie WHERE id = :serieID")
-    fun serie(serieID: String): Single<SerieLocal>*/
+@Dao
+interface SeriesDao {
+    @Query("SELECT * FROM SERIE WHERE id = :serieId")
+    fun serie(serieId: String): Single<SerieLocal>
 
+    @Query("SELECT * FROM SERIE WHERE id ")
+    fun series(): Single<List<SerieLocal>>
 
-    init {
-        series.value = seriesDao
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSeries(movies: List<SerieLocal>)
 
-    fun addSerie(serieRemote: SerieRemote){
-        seriesDao.add(serieRemote)
-        series.value = seriesDao
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSerie(movies: SerieLocal)
 
-    fun getSeries() = series as LiveData<List<SerieRemote>>
 }

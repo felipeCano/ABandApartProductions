@@ -4,10 +4,20 @@ import android.util.Log
 import com.aband.apart.productions.control.model.local.SerieLocal
 import com.aband.apart.productions.control.model.remote.SerieRemote
 import com.aband.apart.productions.data.api.ApiSeries
+import com.aband.apart.productions.data.db.SeriesDao
 import com.google.gson.Gson
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 
-class SeriesRepository(private val apiSeries: ApiSeries) {
+class SeriesRepository(
+    private val apiSeries: ApiSeries,
+    private val seriesDao: SeriesDao
+) {
+
+
+    fun popularSeries() : Observable<List<SerieLocal>>{
+        return getSeries().onErrorResumeNext(serieFromBd())
+    }
 
     fun getSeries(): Observable<List<SerieLocal>> {
         return apiSeries.getPopularSeries().map { response ->
@@ -15,17 +25,19 @@ class SeriesRepository(private val apiSeries: ApiSeries) {
             Gson().fromJson(response, SerieRemote::class.java).results
 
         }.doOnNext {
+            saveSeries(it)
+            Log.e("getPopular", it.toString())
+        }.doOnError {
             Log.e("getPopular", it.toString())
         }
-            .doOnError {
-                Log.e("getPopular", it.toString())
-            }
     }
 
     fun getSeriesTodRated(): Observable<List<SerieLocal>> {
         return apiSeries.getTopRatedSeries().map { response ->
             Log.d("getTopRated", response.toString())
             Gson().fromJson(response, SerieRemote::class.java).results
+        }.doOnNext {
+            saveSeries(it)
         }
     }
 
@@ -33,6 +45,8 @@ class SeriesRepository(private val apiSeries: ApiSeries) {
         return apiSeries.getOnTvSeries().map { response ->
             Log.d("getOntv", response.toString())
             Gson().fromJson(response, SerieRemote::class.java).results
+        }.doOnNext {
+            saveSeries(it)
         }
     }
 
@@ -40,6 +54,7 @@ class SeriesRepository(private val apiSeries: ApiSeries) {
         return apiSeries.getDetailSerie(serieId).map { response ->
             Gson().fromJson(response, SerieLocal::class.java)
         }.doOnNext {
+            saveSerie(it)
             Log.e("getDetailSeries", it.toString())
         }
             .doOnError {
@@ -47,4 +62,29 @@ class SeriesRepository(private val apiSeries: ApiSeries) {
             }
     }
 
+    fun saveSeries(serieLocal: List<SerieLocal>) {
+        Observable.fromCallable { seriesDao.insertSeries(serieLocal) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe()
+    }
+
+
+    fun saveSerie(serieLocal: SerieLocal) {
+        Observable.fromCallable { seriesDao.insertSerie(serieLocal) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe()
+    }
+
+    private fun serieFromBd() :  Observable<List<SerieLocal>>{
+        return seriesDao.series().toObservable()
+            .doOnNext{
+                if (it.isNotEmpty()){
+                    it
+                }else{
+                    Observable.just(emptyList<SerieLocal>())
+                }
+            }
+    }
 }
