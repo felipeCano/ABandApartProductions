@@ -38,10 +38,12 @@ open class BaseViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe{
             }
-            .subscribe {
+            .subscribe ({
                 liveDataDetail.postValue(it)
                 Log.d("addDisposableDetail", it.toString())
-            }
+            },{
+                Log.d("holiDetail","holiDetail")
+            })
         )
     }
 

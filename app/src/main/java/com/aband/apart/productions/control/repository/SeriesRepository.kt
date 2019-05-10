@@ -17,6 +17,17 @@ class SeriesRepository(
     fun popularSeries() : Observable<List<SerieLocal>>{
         return getSeries().onErrorResumeNext(serieFromBd())
     }
+    fun topRatedSeries() : Observable<List<SerieLocal>>{
+        return getSeriesTodRated().onErrorResumeNext(serieFromBd())
+    }
+    fun ontvSeries() : Observable<List<SerieLocal>>{
+        return getSeriesOnTv().onErrorResumeNext(serieFromBd())
+    }
+
+    fun detaiSeriesBd(serieId : String) : Observable<SerieLocal>{
+        return getDetailSeries(serieId).onErrorResumeNext(detailFromBd(serieId))
+    }
+
 
     fun getSeries(): Observable<List<SerieLocal>> {
         return apiSeries.getPopularSeries().map { response ->
@@ -88,4 +99,13 @@ class SeriesRepository(
                 }
             }
     }
+
+    private fun detailFromBd(serieId: String): Observable<SerieLocal> {
+        return seriesDao.serie(serieId).filter { it != null }
+            .toObservable()
+            .doOnNext {
+                Log.d("detailFromBd","Dispatching ${it.id} serie from DB...")
+            }
+    }
+
 }

@@ -28,6 +28,7 @@ class TopRatedFragment : BaseFragment(), DetailSeriesInterface {
         seriesRepository = SeriesRepository(retrofit, seriesDao)
         topRatedViewModel = TopRatedViewModel(seriesRepository)
         topRatedViewModel.getSeriesTopRated()
+        topRatedViewModel.getTopRatedBd()
 
         topRatedViewModel.liveData.observe(this, recyclerTopRated)
     }
@@ -53,6 +54,6 @@ class TopRatedFragment : BaseFragment(), DetailSeriesInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        topRatedViewModel.clearDisposable()
+       // topRatedViewModel.clearDisposable()
     }
 }

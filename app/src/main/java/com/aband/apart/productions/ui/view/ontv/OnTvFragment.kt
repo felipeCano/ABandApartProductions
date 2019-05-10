@@ -39,6 +39,7 @@ class OnTvFragment : BaseFragment(), DetailOnTvInterface {
         seriesRepository = SeriesRepository(retrofit, seriesDao)
         onTvViewModel = OnTvViewModel(seriesRepository)
         onTvViewModel.getSeriesOnTv()
+        onTvViewModel.getOnTvBd()
 
         onTvViewModel.liveData.observe(this, recyclerOnTv)
     }
@@ -66,6 +67,6 @@ class OnTvFragment : BaseFragment(), DetailOnTvInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        onTvViewModel.clearDisposable()
+       // onTvViewModel.clearDisposable()
     }
 }

@@ -59,6 +59,6 @@ class SeriesFragment : BaseFragment(), DetailSeriesInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        seriesViewModel.clearDisposable()
+       // seriesViewModel.clearDisposable()
     }
 }

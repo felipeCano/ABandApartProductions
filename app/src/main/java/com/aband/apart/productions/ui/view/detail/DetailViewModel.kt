@@ -8,4 +8,8 @@ class DetailViewModel (private val seriesRepository: SeriesRepository) : BaseVie
     fun getSeriesDetails(serieId : String){
         addDisposableDetail(seriesRepository.getDetailSeries(serieId))
     }
+
+    fun getDetailBd(serieId : String){
+        addDisposableDetail(seriesRepository.detaiSeriesBd(serieId))
+    }
 }

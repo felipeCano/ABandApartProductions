@@ -27,6 +27,7 @@ class DetailFragment : BaseFragment() {
         seriesRepository = SeriesRepository(retrofit, seriesDao)
         detailViewModel = DetailViewModel(seriesRepository)
         detailViewModel.getSeriesDetails(serieId)
+        detailViewModel.getDetailBd(serieId)
 
         detailViewModel.liveDataDetail.observe(this, viewDetails)
 
