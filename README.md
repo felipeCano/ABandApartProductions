@@ -17,6 +17,9 @@ en que cada clase o cada metodo nombrado de alguna forma cumpla con la responsib
 En qué consiste el principio de responsabilidad única? Cuál es su propósito? 
 un codigo limpio es el cual por mediante una logica es capaz de hacer un codigo entendible y el poder separar las logicas.
 
+Explicaciones 
+Se demora un poco en cargar la ui por que la api es algo lenta.
+
 Uso de Arquitectura Mvvm
 
 ![1*aIjW3c8d9Q8sJvISoRj8qw](https://user-images.githubusercontent.com/28158130/57504008-4f360500-72b8-11e9-8230-2d33891c2f81.png)
