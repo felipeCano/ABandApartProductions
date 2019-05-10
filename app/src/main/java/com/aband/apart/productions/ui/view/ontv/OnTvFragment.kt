@@ -12,6 +12,7 @@ import com.aband.apart.productions.data.api.ApiSeries
 import com.aband.apart.productions.data.db.SerieDataBase
 import com.aband.apart.productions.data.db.SeriesDao
 import com.aband.apart.productions.ui.adapter.SeriesOnTvAdapter
+import com.aband.apart.productions.ui.interfaces.DetailOnTvInterface
 import com.aband.apart.productions.ui.interfaces.DetailSeriesInterface
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -23,7 +24,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class OnTvFragment : BaseFragment(), DetailSeriesInterface {
+class OnTvFragment : BaseFragment(), DetailOnTvInterface {
 
     private lateinit var onTvViewModel: OnTvViewModel
     private lateinit var seriesRepository: SeriesRepository
@@ -44,7 +45,7 @@ class OnTvFragment : BaseFragment(), DetailSeriesInterface {
 
     fun initAdapterOnTv(serieLocal: List<SerieLocal>) {
         mAdaterOnTv = SeriesOnTvAdapter(serieLocal)
-        mAdaterOnTv!!.onDetailsSeries(this)
+        mAdaterOnTv.onDetailsSeries(this)
         rvSeriesOnTv.adapter = mAdaterOnTv
     }
 
@@ -52,14 +53,19 @@ class OnTvFragment : BaseFragment(), DetailSeriesInterface {
         initAdapterOnTv(seriesLocal)
     }
 
-    override fun onDetailSeries(serieLocal: SerieLocal) {
+    override fun onDetailOnTvInterface(serieLocal: SerieLocal) {
         var bundle = Bundle()
         bundle.putString("serieId", serieLocal.id)
         Log.d("idprueba", serieLocal.id)
-        navController()!!.navigate(R.id.action_onTvFragment_to_detailFragment)
+        navController()!!.navigate(R.id.action_onTvFragment_to_detailFragment, bundle)
     }
 
     fun serieDao(db: SerieDataBase): SeriesDao = db.movieDao()
 
     override fun fragmentLayout(): Int = R.layout.fragment_on_tv
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onTvViewModel.clearDisposable()
+    }
 }

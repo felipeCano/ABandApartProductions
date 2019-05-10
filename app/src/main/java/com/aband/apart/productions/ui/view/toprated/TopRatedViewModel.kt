@@ -8,4 +8,8 @@ class TopRatedViewModel(private val seriesRepository: SeriesRepository) : BaseVi
     fun getSeriesTopRated(){
         addDisposable(seriesRepository.getSeriesTodRated())
     }
+
+    fun clearDisposable(){
+        clearDisposable()
+    }
 }

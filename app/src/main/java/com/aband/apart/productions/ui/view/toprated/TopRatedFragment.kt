@@ -45,9 +45,14 @@ class TopRatedFragment : BaseFragment(), DetailSeriesInterface {
         var bundle = Bundle()
         bundle.putString("serieId", serieLocal.id)
         Log.d("idprueba", serieLocal.id)
-        navController()!!.navigate(R.id.action_topRatedFragment_to_detailFragment)
+        navController()!!.navigate(R.id.action_topRatedFragment_to_detailFragment, bundle)
     }
 
     fun serieDao(db: SerieDataBase): SeriesDao = db.movieDao()
     override fun fragmentLayout(): Int = R.layout.fragment_top_rated
+
+    override fun onDestroy() {
+        super.onDestroy()
+        topRatedViewModel.clearDisposable()
+    }
 }

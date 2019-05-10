@@ -8,6 +8,7 @@ import android.view.animation.ScaleAnimation
 import androidx.recyclerview.widget.RecyclerView
 import com.aband.apart.productions.R
 import com.aband.apart.productions.control.model.local.SerieLocal
+import com.aband.apart.productions.ui.interfaces.DetailOnTvInterface
 import com.aband.apart.productions.ui.interfaces.DetailSeriesInterface
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_on_tv_series.view.*
@@ -17,7 +18,7 @@ const val PATH_ON_TV = "https://image.tmdb.org/t/p/w500"
 class SeriesOnTvAdapter(var myDataset : List<SerieLocal>) :
     RecyclerView.Adapter<SeriesOnTvAdapter.SerieHolder>(){
 
-    var detailSeries : DetailSeriesInterface? = null
+    var detailSeries : DetailOnTvInterface? = null
 
   inner class SerieHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
       val mImageSeriesOnTv = itemView.imageSeriesOnTv
@@ -29,7 +30,7 @@ class SeriesOnTvAdapter(var myDataset : List<SerieLocal>) :
           val position = adapterPosition
           val i = v!!.id
           if (i == R.id.imageSeriesOnTv){
-              detailSeries!!.onDetailSeries(myDataset[position])
+              detailSeries!!.onDetailOnTvInterface(myDataset[position])
           }
       }
     }
@@ -51,7 +52,7 @@ class SeriesOnTvAdapter(var myDataset : List<SerieLocal>) :
     }
     override fun getItemCount(): Int = myDataset.size
 
-    fun onDetailsSeries(detailSeriesInterface: DetailSeriesInterface){
+    fun onDetailsSeries(detailSeriesInterface: DetailOnTvInterface){
         this.detailSeries = detailSeriesInterface
     }
 

@@ -9,4 +9,8 @@ class OnTvViewModel(private val seriesRepository: SeriesRepository) : BaseViewMo
         addDisposable(seriesRepository.getSeriesOnTv())
     }
 
+    fun clearDisposable(){
+        clearDisposable()
+    }
+
 }
