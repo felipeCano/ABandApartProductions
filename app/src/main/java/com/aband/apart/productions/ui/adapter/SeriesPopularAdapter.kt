@@ -22,9 +22,6 @@ RecyclerView.Adapter<SeriesPopularAdapter.SerieHolder>(){
      var detailSeries : DetailSeriesInterface? = null
 
     inner class SerieHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
-
-        //    val mtvTitleSeries = itemView.tvTitleSeries
-        //val mtvOverride = itemView.tvOverride
         val mImageSeries = itemView.imageSeries
 
         init {
@@ -46,12 +43,9 @@ RecyclerView.Adapter<SeriesPopularAdapter.SerieHolder>(){
     }
 
     override fun onBindViewHolder(holder: SerieHolder, position: Int) {
-      //  holder.mtvTitleSeries.text = myDataset[position].originalName
-        //holder.mtvOverride.text = myDataset[position].overview
         Picasso.get()
             .load(PATH + myDataset[position].imageserie)
             .resize(600, 950)
-            //.placeholder(R.drawable.got)
             .centerCrop()
             .into(holder.mImageSeries)
 

@@ -28,8 +28,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.airbnb.android:lottie:2.8.0'
-
     testImplementation annexe.test.junit
     androidTestImplementation annexe.test.androidxTestRunner
     androidTestImplementation annexe.test.androidxTestEspresso

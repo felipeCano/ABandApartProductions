@@ -7,6 +7,7 @@ import com.aband.apart.productions.control.model.local.SerieLocal
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 import java.util.*
@@ -18,13 +19,17 @@ open class BaseViewModel : ViewModel() {
     private val disposables = CompositeDisposable()
 
     protected fun  addDisposable(observable: Observable<List<SerieLocal>>){
-        disposables.add(observable.subscribeOn(Schedulers.io())
+        val disposables1 : Disposable = observable.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe{
             }
-            .subscribe {
+            .subscribe ({
                 liveData.postValue(it)
-            }
+            },{
+                Log.d("holi","holi2")
+            })
+        disposables.add(
+            disposables1
         )
     }
 
@@ -38,5 +43,9 @@ open class BaseViewModel : ViewModel() {
                 Log.d("addDisposableDetail", it.toString())
             }
         )
+    }
+
+    override fun onCleared() {
+        disposables.clear()
     }
 }

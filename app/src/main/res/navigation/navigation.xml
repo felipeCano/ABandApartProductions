@@ -2,17 +2,47 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/navigation"
-    app:startDestination="@id/seriesFragment">
+    app:startDestination="@id/menuSeries">
+    <fragment
+        android:id="@+id/menuSeries"
+        android:name="com.aband.apart.productions.ui.view.menu.MenuSeries"
+        android:label="MenuSeries" >
+        <action
+            android:id="@+id/action_menuSeries_to_seriesFragment"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_menuSeries_to_topRatedFragment"
+            app:destination="@id/topRatedFragment" />
+        <action
+            android:id="@+id/action_menuSeries_to_onTvFragment"
+            app:destination="@id/onTvFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.aband.apart.productions.ui.view.detail.DetailFragment"
+        android:label="DetailFragment" />
+    <fragment
+        android:id="@+id/onTvFragment"
+        android:name="com.aband.apart.productions.ui.view.ontv.OnTvFragment"
+        android:label="OnTvFragment" >
+        <action
+            android:id="@+id/action_onTvFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/topRatedFragment"
+        android:name="com.aband.apart.productions.ui.view.toprated.TopRatedFragment"
+        android:label="TopRatedFragment" >
+        <action
+            android:id="@+id/action_topRatedFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/seriesFragment"
-        android:name="com.aband.apart.productions.ui.series.SeriesFragment"
+        android:name="com.aband.apart.productions.ui.view.popular.SeriesFragment"
         android:label="SeriesFragment" >
         <action
             android:id="@+id/action_seriesFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.aband.apart.productions.ui.detail.DetailFragment"
-        android:label="DetailFragment" />
 </navigation>

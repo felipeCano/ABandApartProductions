@@ -10,10 +10,10 @@ import io.reactivex.Single
 
 @Dao
 interface SeriesDao {
-    @Query("SELECT * FROM SERIE WHERE id = :serieId")
+    @Query("SELECT * FROM SerieLocal WHERE id = :serieId")
     fun serie(serieId: String): Single<SerieLocal>
 
-    @Query("SELECT * FROM SERIE WHERE id ")
+    @Query("SELECT * FROM SerieLocal WHERE id ")
     fun series(): Single<List<SerieLocal>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

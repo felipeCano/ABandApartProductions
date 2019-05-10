@@ -1,4 +1,4 @@
-package com.aband.apart.productions.ui.detail
+package com.aband.apart.productions.ui.view.detail
 
 import com.aband.apart.productions.center.BaseViewModel
 import com.aband.apart.productions.control.repository.SeriesRepository

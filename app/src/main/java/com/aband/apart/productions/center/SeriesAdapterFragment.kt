@@ -3,7 +3,7 @@ package com.aband.apart.productions.center
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.aband.apart.productions.ui.series.SeriesFragment
+import com.aband.apart.productions.ui.view.popular.SeriesFragment
 
 const val FAVORITE_TV_SHOW = "Popular"
 const val RECCOMENDATIONS_TV_SHOW = "On Tv"
@@ -25,9 +25,9 @@ class SeriesAdapterFragment(fm : FragmentManager) :
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
-            0 -> return FAVORITE_TV_SHOW
-            1 -> return RECCOMENDATIONS_TV_SHOW
-            2 -> return RATED_TV_SHOW
+            0 ->  FAVORITE_TV_SHOW
+            1 ->  RECCOMENDATIONS_TV_SHOW
+            2 ->  RATED_TV_SHOW
             else ->
                 return FAVORITE_TV_SHOW
 

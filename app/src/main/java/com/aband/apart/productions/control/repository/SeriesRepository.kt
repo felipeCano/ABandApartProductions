@@ -14,7 +14,6 @@ class SeriesRepository(
     private val seriesDao: SeriesDao
 ) {
 
-
     fun popularSeries() : Observable<List<SerieLocal>>{
         return getSeries().onErrorResumeNext(serieFromBd())
     }
@@ -26,8 +25,6 @@ class SeriesRepository(
 
         }.doOnNext {
             saveSeries(it)
-            Log.e("getPopular", it.toString())
-        }.doOnError {
             Log.e("getPopular", it.toString())
         }
     }
@@ -66,6 +63,10 @@ class SeriesRepository(
         Observable.fromCallable { seriesDao.insertSeries(serieLocal) }
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
+            .doOnError {
+                Log.e( "errorsave","Unable to store movie")
+            }
+            .doOnNext { Log.i("errorsave"," Movie stored!") }
             .subscribe()
     }
 

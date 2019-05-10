@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "serie")
+@Entity(tableName = "SerieLocal")
 data class SerieLocal(
     @PrimaryKey
     val id: String,
