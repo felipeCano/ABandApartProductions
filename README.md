@@ -29,3 +29,11 @@ Previsualización de la app
 Inicio App
 
 ![index](https://user-images.githubusercontent.com/28158130/57895479-6f624880-7811-11e9-8613-f133b8368afd.jpeg)
+
+Peliculas
+
+![2](https://user-images.githubusercontent.com/28158130/57895535-bbad8880-7811-11e9-8ec7-c1fafb51f454.jpeg)
+
+Detalle de la Pelicula
+
+![3](https://user-images.githubusercontent.com/28158130/57895576-e992cd00-7811-11e9-9fc1-34029e623952.jpeg)
