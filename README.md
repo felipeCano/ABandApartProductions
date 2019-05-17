@@ -24,3 +24,8 @@ Uso de Arquitectura Mvvm
 
 ![1*aIjW3c8d9Q8sJvISoRj8qw](https://user-images.githubusercontent.com/28158130/57504008-4f360500-72b8-11e9-8230-2d33891c2f81.png)
 
+Previsualización de la app
+
+Inicio App
+
+![index](https://user-images.githubusercontent.com/28158130/57895479-6f624880-7811-11e9-8613-f133b8368afd.jpeg)
